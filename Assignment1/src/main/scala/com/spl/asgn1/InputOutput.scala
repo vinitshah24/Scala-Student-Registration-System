@@ -3,6 +3,7 @@ package com.spl.asgn1
 import scala.io.StdIn.readLine
 
 object InputOutput {
+
   def main(args: Array[String]): Unit = {
     print("Enter car name: ")
     val carName: String = readLine()

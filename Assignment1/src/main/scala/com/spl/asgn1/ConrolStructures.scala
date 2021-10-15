@@ -3,7 +3,7 @@ package com.spl.asgn1
 object ConrolStructures {
   def main(args: Array[String]): Unit = {
 
-  val x: int = 10;
+  val x: int = 10
 
   // if else statement
   if (x < 5) {

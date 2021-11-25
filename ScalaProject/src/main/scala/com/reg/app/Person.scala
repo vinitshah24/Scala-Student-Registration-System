@@ -1,10 +1,10 @@
 package com.reg.app
 
 class Person {
-  private var firstName: String
-  private var lastName: String
-  private var age: Int
-  private var gender: String
+  var firstName: String = ""
+  var lastName: String = ""
+  var age: Int = 0
+  var gender: String = ""
 
   def getFirstName: String = firstName
 
@@ -17,7 +17,7 @@ class Person {
   def canEqual(a: Any): Boolean = a.isInstanceOf[Person]
 
   override def equals(other: Any): Boolean = other match {
-    case other: Person => other.canEqual(this) && this.id == other.id
+    case other: Person => other.canEqual(this) && this.firstName == other.firstName
     case _ => false
   }
 

@@ -1,13 +1,13 @@
 package com.reg.app
 
+import java.util
 import scala.collection.mutable.ArrayBuffer
 
 class Teacher extends Person {
-  private var id: Int
-  private var email: String
-  private var campus: String
-  private var coursesTaught: ArrayBuffer[Course] = ArrayBuffer[Course])
-
+  private var id: Int = 0
+  private var email: String = ""
+  private var campus: String = ""
+  private var coursesTaught = new util.ArrayList[Course]
 
   def getId: Int = id
 
@@ -15,17 +15,13 @@ class Teacher extends Person {
 
   def getCampus: String = campus
 
-  def getCoursesTaught: ArrayBuffer[Course] = coursesTaught
+  def getCoursesTaught: util.ArrayList[Course] = coursesTaught
 
-  def canEqual(a: Any): Boolean = a.isInstanceOf[Teacher]
+  override def canEqual(a: Any): Boolean = a.isInstanceOf[Teacher]
 
-  def addCourseTaught(Course course){
-    coursesTaught.addOne(course)
-  }
+  def addCourseTaught(course: Course) = coursesTaught.add(course)
 
-  def removeCourseTaught(Course course){
-    coursesTaught.remove(coursesTaught.indexOf(course))
-  }
+  def removeCourseTaught(course: Course) = coursesTaught.remove(coursesTaught.indexOf(course))
 
   override def equals(other: Any): Boolean = other match {
     case other: Teacher => other.canEqual(this) && this.id == other.id
@@ -33,11 +29,11 @@ class Teacher extends Person {
   }
 
   override def toString: String =
-    s"Teacher($firstName, $lastName, $age, $gender, $id, $email, $campus, $coursesTaught )"
+    s"Teacher($firstName, $lastName, $age, $gender, $id, $email, $campus, $coursesTaught)"
 }
 
 object Teacher{
-  def apply(id: Int, email: String, campus: String, major: String, coursesTaught: ArrayBuffer[Course] ): Teacher = {
+  def apply(id: Int, email: String, campus: String, major: String, coursesTaught: util.ArrayList[Course] ): Teacher = {
     var teacher = new Teacher
     teacher.id = id
     teacher.email = email
@@ -48,17 +44,21 @@ object Teacher{
 
   def main(args: Array[String]): Unit = {
     val teacher: Teacher = new Teacher()
+    teacher.firstName = "Ali"
+    teacher.lastName = "Sever"
+    teacher.age = 25
+    teacher.gender = "Male"
     teacher.id = 123456789
     teacher.email = "teacher@uncc.edu"
     teacher.campus = "UNCC"
 
-    var coursesTaught: ArrayBuffer[Course] = ArrayBuffer[Course])
+    var coursesTaught: util.ArrayList[Course] = util.ArrayList[Course]
     val course =
-      Course(2, "Machine Learning", "Introduction to the machine learning pipeline",
-        4, ArrayBuffer("Monday", "Wednesday"), "2:45PM", "Woodward", 6)
-    coursesTaught.addOne(course)
+      Course(2, "Survey of Programming Languagues", "Programming langugues",
+        4, ArrayBuffer("Monday"), "7:00PM", "Woodward", 6)
+    coursesTaught.add(course)
 
-    teacher.courses = coursesTaught
+    teacher.coursesTaught = coursesTaught
 
     print(teacher.toString)
   }

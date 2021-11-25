@@ -1,8 +1,9 @@
 package com.reg.app
 
 import org.junit.Test
-import org.junit.Assert._
+import org.junit.Assert.*
 
+import java.util
 import scala.collection.mutable.ArrayBuffer
 
 object StudentTest {
@@ -13,8 +14,14 @@ class StudentTest {
 
   val course = Course(1, "Machine Learning", "Introduction to the machine learning pipeline",
     3, ArrayBuffer("Monday", "Wednesday"), "2:45PM", "Woodward", 6)
+  var courses = new util.ArrayList[Course]()
+  courses.add(course)
+  val student = Student(801015040, "jpate118@uncc.edu", "UNCC", "Computer Science", courses)
 
-  val student = Student(801015040, "jpate118@uncc.edu", "UNCC", "Computer Science", ArrayBuffer(course))
+  student.firstName = "Jay"
+  student.lastName = "Patel"
+  student.age = 22
+  student.gender = "Male"
 
   @Test def testGetId(): Unit = {
     val expResult = 801015040
@@ -41,7 +48,7 @@ class StudentTest {
   }
 
   @Test def testGetCourses(): Unit = {
-    val expResult = ArrayBuffer[Course](course)
+    val expResult = courses
     val result = student.getCourses
     assertEquals(expResult, result)
   }
@@ -49,18 +56,18 @@ class StudentTest {
   @Test def testAddCourse(): Unit = {
     val newCourse = Course(2, "Machine Learning", "Introduction to the machine learning pipeline",
       3, ArrayBuffer("Monday", "Wednesday"), "2:45PM", "Woodward", 6)
-    assertEquals(1, student.courses.size)
+    assertEquals(1, student.getCourses.size())
     student.addCourse(newCourse)
     val expResult = 2;
-    val result = student.courses.size
+    val result = student.getCourses.size
     assertEquals(expResult, result)
   }
 
   @Test def testRemoveCourse(): Unit = {
-    assertEquals(1, student.courses.size)
+    assertEquals(1, student.getCourses.size())
     student.removeCourse(course)
     val expResult = 0;
-    val result = student.courses.size
+    val result = student.getCourses.size
     assertEquals(expResult, result)
   }
 
@@ -77,7 +84,7 @@ class StudentTest {
   }
 
   @Test def testToString(): Unit = {
-    val expResult = "Student(Jay, Patel, 22, Male, 801015040, jpate118@uncc.edu, UNCC, Computer Science, ArrayBuffer(Course(1, Machine Learning, Introduction to the machine learning pipeline, 3, ArrayBuffer(Monday, Wednesday), 2:45PM, Woodward, 6)))"
+    val expResult = "Student(Jay, Patel, 22, Male, 801015040, jpate118@uncc.edu, UNCC, Computer Science, [Course(1, Machine Learning, Introduction to the machine learning pipeline, 3, ArrayBuffer(Monday, Wednesday), 2:45PM, Woodward, 6)])"
     val result = student.toString
     assertEquals(expResult, result)
   }

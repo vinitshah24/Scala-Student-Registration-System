@@ -33,6 +33,7 @@ object Person{
     person.lastName = lastName
     person.age = age
     person.gender = gender
+    person
   }
 
   def main(args: Array[String]): Unit = {

@@ -1,18 +1,14 @@
 package com.reg.app
 
-class Person {
-  var firstName: String = ""
-  var lastName: String = ""
-  var age: Int = 0
-  var gender: String = ""
+class Person(var firstName: String, var lastName: String, var age: Int, var gender: String) {
 
-  def getFirstName: String = firstName
+  def getFirstName: String = this.firstName
 
-  def getLastName: String = lastName
+  def getLastName: String = this.lastName
 
-  def getAge: Int = age
+  def getAge: Int = this.age
 
-  def getGender: String = gender
+  def getGender: String = this.gender
 
   def canEqual(a: Any): Boolean = a.isInstanceOf[Person]
 
@@ -22,27 +18,13 @@ class Person {
   }
 
   override def toString: String =
-    s"Person($firstName, $lastName, $age, $gender)"
+    s"Person(${this.firstName}, ${this.lastName}, ${this.age}, ${this.gender})"
 }
 
-object Person{
-  def apply(firstName: String, lastName: String, age: Int, gender: String): Person = {
-    var person = new Person
-
-    person.firstName = firstName
-    person.lastName = lastName
-    person.age = age
-    person.gender = gender
-    person
-  }
+object Person {
 
   def main(args: Array[String]): Unit = {
-    val person: Person = new Person()
-    person.firstName = "Jay"
-    person.lastName = "Patel"
-    person.age = 22
-    person.gender = "Male"
-
+    val person: Person = new Person("Sam", "Smith", 20, "Male")
     print(person.toString)
   }
 }

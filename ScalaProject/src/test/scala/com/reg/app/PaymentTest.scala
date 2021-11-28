@@ -1,0 +1,90 @@
+package com.reg.app
+
+import org.junit.Assert.assertEquals
+import org.junit.Test
+
+class PaymentTest {
+  val coursePayment = new Payment(3, true)
+
+  @Test def testGetCredit(): Unit = {
+    val expResult = 3
+    val result = coursePayment.getCredit
+    assertEquals(expResult, result)
+  }
+
+  @Test def testIsInstateResident(): Unit = {
+    val expResult = true
+    val result = coursePayment.inStateResident
+    assertEquals(expResult, result)
+  }
+
+  @Test def testChangeResidency(): Unit = {
+    val testPayment = new Payment(3, true)
+    testPayment.inStateResident = false
+    val expResult = false
+    val result = testPayment.inStateResident
+    assertEquals(expResult, result)
+  }
+
+  @Test def testToString(): Unit = {
+    val expResult = "Payment(3, true, 5000.0)"
+    val result = coursePayment.toString
+    assertEquals(expResult, result)
+  }
+
+  @Test def testGetTotalInState3Credits(): Unit = {
+    val testPayment = new Payment(3, true)
+    val expResult = 5000.0
+    val result = testPayment.getTotal
+    assertEquals(expResult, result, 0.0)
+  }
+
+  @Test def testGetTotalInState4Credits(): Unit = {
+    val testPayment = new Payment(4, true)
+    val expResult = 4400.0
+    val result = testPayment.getTotal
+    assertEquals(expResult, result, 0.0)
+  }
+
+  @Test def testGetTotalInState6Credits(): Unit = {
+    val testPayment = new Payment(6, true)
+    val expResult = 4400.0
+    val result = testPayment.getTotal
+    assertEquals(expResult, result, 0.0)
+  }
+
+  @Test def testGetTotalInState8Credits(): Unit = {
+    val testPayment = new Payment(8, true)
+    val expResult = 4000.0
+    val result = testPayment.getTotal
+    assertEquals(expResult, result, 0.0)
+  }
+
+  @Test def testGetTotalOutState3Credits(): Unit = {
+    val testPayment = new Payment(3, false)
+    val expResult = 20000.0
+    val result = testPayment.getTotal
+    assertEquals(expResult, result, 0.0)
+  }
+
+  @Test def testGetTotalOutState4Credits(): Unit = {
+    val testPayment = new Payment(4, false)
+    val expResult = 17600.0
+    val result = testPayment.getTotal
+    assertEquals(expResult, result, 0.0)
+  }
+
+  @Test def testGetTotalOutState6Credits(): Unit = {
+    val testPayment = new Payment(6, false)
+    val expResult = 17600.0
+    val result = testPayment.getTotal
+    assertEquals(expResult, result, 0.0)
+  }
+
+  @Test def testGetTotalOutState8Credits(): Unit = {
+    val testPayment = new Payment(8, false)
+    val expResult = 16000.0
+    val result = testPayment.getTotal
+    assertEquals(expResult, result, 0.0)
+  }
+}

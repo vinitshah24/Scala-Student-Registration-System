@@ -5,13 +5,11 @@ import org.junit.Assert._
 
 import scala.collection.mutable.ArrayBuffer
 
-object CourseTest {
-
-}
-
 class CourseTest {
-  val course = Course(1, "Machine Learning", "Introduction to the machine learning pipeline",
-    3, ArrayBuffer("Monday", "Wednesday"), "2:45PM", "Woodward", 6)
+  val prof = new Professor("Jake", "Simmons", 2, "Male", 1,
+    "jsimmons@uncc.edu")
+  val course: Course = new Course(1, "Machine Learning", "Introduction to the machine learning pipeline",
+    3, ArrayBuffer("Monday", "Wednesday"), "2:45PM", "Woodward", prof)
 
   @Test def testGetId(): Unit = {
     val expResult = 1
@@ -56,14 +54,14 @@ class CourseTest {
   }
 
   @Test def testGetInstructor(): Unit = {
-    val expResult = 6
-    val result = course.getInstructorId
+    val expResult = prof
+    val result = course.getInstructor
     assertEquals(expResult, result)
   }
 
   @Test def testIsCourseInstance(): Unit = {
     val expResult = true
-    val result = course.canEqual(new Course)
+    val result = course.canEqual(course)
     assertEquals(expResult, result)
   }
 
@@ -80,9 +78,10 @@ class CourseTest {
   }
 
   @Test def testToString(): Unit = {
-    val expResult = "Course(1, Machine Learning, Introduction to the machine learning pipeline, 3, ArrayBuffer(Monday, Wednesday), 2:45PM, Woodward, 6)"
+    val expResult = "Course(1, Machine Learning, Introduction to the machine learning pipeline, 3, " +
+      "ArrayBuffer(Monday, Wednesday), 2:45PM, Woodward, " +
+      "Professor(Jake, Simmons, 2, Male, 1, jsimmons@uncc.edu))"
     val result = course.toString
     assertEquals(expResult, result)
   }
-
 }

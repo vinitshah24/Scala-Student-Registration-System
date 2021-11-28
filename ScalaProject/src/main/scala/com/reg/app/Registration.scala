@@ -2,7 +2,7 @@ package com.reg.app
 
 import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
-class Registration(department: Department, student: Student, var courses: ListBuffer[Course]) {
+class Registration(var department: Department, var student: Student, var courses: ListBuffer[Course]) {
 
   def getCourses: ListBuffer[Course] = courses
 

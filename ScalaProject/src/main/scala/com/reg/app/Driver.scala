@@ -1,12 +1,45 @@
 package com.reg.app
 
-import scala.collection.mutable
 import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 import scala.language.postfixOps
 import scala.util.control._
 
 object Driver {
   def main(args: Array[String]): Unit = {
+
+    def keyForValue(majors: Map[Int, String], value: Int) = {
+      val foundMajor = majors.find({ case (id, _) => id == value })
+      foundMajor.get._2
+    }
+
+    def printCourses(courseList: ListBuffer[Course]): Unit = {
+      var i = 0
+      while (i < courseList.length) {
+        println(s"ID: ${courseList(i).id}")
+        println(s"Name: ${courseList(i).getName}")
+        println(s"Location: ${courseList(i).getLocation}")
+        println(s"Days: ${courseList(i).getDays}")
+        println(s"TIme: ${courseList(i).getTime}")
+        println(s"Cost: ${courseList(i).getCoursePayment}")
+        println("")
+        i += 1
+      }
+    }
+
+    def showSummary(studReg: Registration): Unit = {
+      println("\n----- SUMMARY OF REGISTERED CLASSES -----\n")
+      for (course <- studReg.courses) {
+        println(s"ID: ${course.id}")
+        println(s"Name: ${course.getName}")
+        println(s"Credit: ${course.getCredit}")
+        println(s"Cost: ${course.getCoursePayment}")
+        println("")
+      }
+      println("----------------------------------------")
+      println(s"TOTAL PAYMENT: ${studReg.getCourseTotal}")
+      println("----------------------------------------")
+    }
+
 
     println("----- STUDENT DETAILS -----\n")
     print("Enter First Name: ")
@@ -33,7 +66,6 @@ object Driver {
       else lastName.length
     }
     val email = s"${firstName.substring(0, 1)}${lastName.substring(0, lastSize)}@uncc.edu"
-
     var majors: Map[Int, String] = Map()
     majors += (1 -> "Computer Science")
     majors += (2 -> "Biology")
@@ -44,12 +76,6 @@ object Driver {
     }
     print("Select number from available Major: ")
     val majorCat = scala.io.StdIn.readLine().toInt
-
-    def keyForValue(majors: Map[Int, String], value: Int) = {
-      val foundMajor = majors.find({ case (id, _) => id == value })
-      foundMajor.get._2
-    }
-
     val major = keyForValue(majors, majorCat)
     val academicTerm = new AcademicTerm("Freshman")
     val student: Student = new Student(firstName, lastName, age, gender, studentId, email, major, academicTerm)
@@ -102,21 +128,6 @@ object Driver {
       "A study of the design and implementation of databases and enterprise data warehouses for business applications",
       3, ArrayBuffer("Saturday"), "5:00 PM", "Kennedy", professorsList(2))
 
-
-    def printCourses(courseList: ListBuffer[Course]): Unit = {
-      var i = 0
-      while (i < courseList.length) {
-        println(s"ID: ${courseList(i).id}")
-        println(s"Name: ${courseList(i).getName}")
-        println(s"Location: ${courseList(i).getLocation}")
-        println(s"Days: ${courseList(i).getDays}")
-        println(s"TIme: ${courseList(i).getTime}")
-        println(s"Cost: ${courseList(i).getCoursePayment}")
-        println("")
-        i += 1
-      }
-    }
-
     println(s"\n----- AVAILABLE COURSES FOR ${student.getMajor.toUpperCase} REGISTRATION -----\n")
     var selectionCourses: ListBuffer[Course] = ListBuffer[Course]()
     var department: Department = new CSDepartment()
@@ -134,7 +145,7 @@ object Driver {
       department = new AccDepartment()
     }
     val regCourseList: ListBuffer[Course] = ListBuffer[Course]()
-    val loop = new Breaks
+    var loop = new Breaks
     loop.breakable {
       while (true) {
         print("Enter the Course ID: ")
@@ -145,16 +156,35 @@ object Driver {
         if (contStr.substring(0).toUpperCase.equals("N")) loop.break
       }
     }
-    println("\n----- SUMMARY OF REGISTERED CLASSES -----\n")
-    val studReg = new Registration(department, student, regCourseList)
-    for (course <- studReg.courses) {
-      println(s"ID: ${course.id})")
-      println(s"Name: ${course.getName}")
-      println(s"Credit: ${course.getCredit}")
-      println(s"Cost: ${course.getCoursePayment}")
-      println("")
+    var studReg = new Registration(department, student, regCourseList)
+    showSummary(studReg)
+
+    println("\n----- DROP/REMOVE CLASSES -----\n")
+    print("Enter Y to modify Registration: ")
+    var modifyReg = scala.io.StdIn.readLine().toString
+    if (modifyReg.toUpperCase.equals("Y")) {
+      loop.breakable {
+        while (true) {
+          print("Enter the Course ID to remove: ")
+          var courseId = scala.io.StdIn.readLine().toInt
+          val removeCourse: ArrayBuffer[Course] = ArrayBuffer()
+          for (course <- studReg.courses)
+            if (course.id == courseId)
+              removeCourse.append(course)
+          studReg.removeCourse(removeCourse.head)
+          //          val courseItr = studReg.courses.iterator
+          //          while (courseItr.hasNext) {
+          //            val course = courseItr.next
+          //            if (course.id == courseId) {
+          //              studReg.removeCourse(course)
+          //            }
+          //          }
+          print("Enter N to complete Registration: ")
+          var contStr = scala.io.StdIn.readLine().toString
+          if (contStr.substring(0).toUpperCase.equals("N")) loop.break
+        }
+      }
+      showSummary(studReg)
     }
-    println("----------------------------------------")
-    println(s"TOTAL PAYMENT: ${studReg.getCourseTotal}")
   }
 }

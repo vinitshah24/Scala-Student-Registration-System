@@ -27,7 +27,7 @@ class RegistrationTest {
   }
 
   @Test def testAddCourse(): Unit = {
-    val newCourse = new Course(2, "NLP", "Introduction to the NLP",
+    val newCourse = new Course(4, "NLP", "Introduction to the NLP",
       3, ArrayBuffer("Monday", "Wednesday"), "2:45PM", "Woodward", prof)
     assertEquals(1, studReg.courses.length)
     studReg.addCourse(newCourse)
@@ -36,7 +36,7 @@ class RegistrationTest {
   }
 
   @Test def testRemoveCourse(): Unit = {
-    val newCourse = new Course(2, "NLP", "Introduction to the NLP",
+    val newCourse = new Course(3, "NLP", "Introduction to the NLP",
       3, ArrayBuffer("Monday", "Wednesday"), "2:45PM", "Woodward", prof)
     studReg.addCourse(newCourse)
     assertEquals(2, studReg.courses.length)

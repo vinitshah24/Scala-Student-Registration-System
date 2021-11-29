@@ -9,6 +9,8 @@ class Course(var id: Int, name: String, description: String, credit: Int, days: 
 
   def getName: String = this.name
 
+  def getProfessor: String = s"${this.professor.firstName} ${this.professor.lastName}"
+
   def getDescription: String = this.description
 
   def getCredit: Int = this.credit

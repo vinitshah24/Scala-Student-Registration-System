@@ -45,13 +45,13 @@ class RegistrationTest {
   }
 
   @Test def testGetCourseCosts(): Unit = {
-    val expResult = ListBuffer(4400.0)
+    val expResult = ListBuffer(970.0)
     val result = studReg.getCourseCosts
     assertEquals(expResult, result)
   }
 
   @Test def testGetCourseTotal(): Unit = {
-    val expResult = 4400.0
+    val expResult = 970.0
     val result = studReg.getCourseTotal
     assertEquals(expResult, result, 0.0)
   }

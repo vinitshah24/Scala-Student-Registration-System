@@ -29,6 +29,13 @@ class CourseTest {
     assertEquals(expResult, result)
   }
 
+  @Test def testGetProfessor(): Unit = {
+    val expResult = "Jake Simmons"
+    val result = course.getProfessor
+    assertEquals(expResult, result)
+  }
+
+
   @Test def testGetCredit(): Unit = {
     val expResult = 3
     val result = course.getCredit
@@ -74,6 +81,14 @@ class CourseTest {
   @Test def testEquals(): Unit = {
     val expResult = true
     val result = course.equals(course)
+    assertEquals(expResult, result)
+  }
+
+  @Test def testEqualsFail(): Unit = {
+    val course2: Course = new Course(2, "Software Engineering", "Software Engineering Principles",
+      3, ArrayBuffer("Monday", "Wednesday"), "1:15 PM", "Woodward", prof)
+    val expResult = false
+    val result = course.equals(course2)
     assertEquals(expResult, result)
   }
 

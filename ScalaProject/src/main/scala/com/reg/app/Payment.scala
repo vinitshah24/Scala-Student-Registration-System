@@ -10,15 +10,15 @@ class Payment(var credit: Int, var inStateResident: Boolean) {
 
   def getTotal: Double = {
     val creditCost = {
-      if (credit > 0 && credit <= 3) 250
-      else if (credit > 3 && credit <= 6) 220
-      else if (credit > 6) 200
+      if (credit > 0 && credit <= 3) 450
+      else if (credit > 3 && credit <= 6) 950
+      else if (credit > 6) 1450
       else 100
     }
     val inStateCost = 20
     val outStateCost = inStateCost * 4
-    if (inStateResident) inStateCost * creditCost
-    else outStateCost * creditCost
+    if (inStateResident) inStateCost + creditCost
+    else outStateCost + creditCost
   }
 
   override def toString: String = s"Payment($credit, $inStateResident, $getTotal)"

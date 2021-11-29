@@ -17,6 +17,7 @@ object Driver {
       while (i < courseList.length) {
         println(s"ID: ${courseList(i).id}")
         println(s"Name: ${courseList(i).getName}")
+        println(s"Professor: ${courseList(i).getProfessor}")
         println(s"Location: ${courseList(i).getLocation}")
         println(s"Days: ${courseList(i).getDays}")
         println(s"TIme: ${courseList(i).getTime}")
@@ -32,6 +33,7 @@ object Driver {
         println(s"ID: ${course.id}")
         println(s"Name: ${course.getName}")
         println(s"Credit: ${course.getCredit}")
+        println(s"Professor: ${course.getProfessor}")
         println(s"Cost: ${course.getCoursePayment}")
         println("")
       }
@@ -145,18 +147,23 @@ object Driver {
       department = new AccDepartment()
     }
     val regCourseList: ListBuffer[Course] = ListBuffer[Course]()
+    var studReg = new Registration(department, student, regCourseList)
     var loop = new Breaks
     loop.breakable {
       while (true) {
         print("Enter the Course ID: ")
         var courseId = scala.io.StdIn.readLine().toInt
         for (course <- selectionCourses) if (course.id == courseId) regCourseList += course
-        print("Enter N to complete Registration: ")
+        print("Enter C to complete Registration: ")
         var contStr = scala.io.StdIn.readLine().toString
-        if (contStr.substring(0).toUpperCase.equals("N")) loop.break
+        if (contStr.substring(0).toUpperCase.equals("C")) {
+          studReg = new Registration(department, student, regCourseList)
+          showSummary(studReg)
+          loop.break
+        }
       }
     }
-    var studReg = new Registration(department, student, regCourseList)
+    studReg = new Registration(department, student, regCourseList)
     showSummary(studReg)
 
     println("\n----- DROP/REMOVE CLASSES -----\n")
@@ -172,19 +179,16 @@ object Driver {
             if (course.id == courseId)
               removeCourse.append(course)
           studReg.removeCourse(removeCourse.head)
-          //          val courseItr = studReg.courses.iterator
-          //          while (courseItr.hasNext) {
-          //            val course = courseItr.next
-          //            if (course.id == courseId) {
-          //              studReg.removeCourse(course)
-          //            }
-          //          }
           print("Enter N to complete Registration: ")
           var contStr = scala.io.StdIn.readLine().toString
-          if (contStr.substring(0).toUpperCase.equals("N")) loop.break
+          if (contStr.substring(0).toUpperCase.equals("N")) {
+            showSummary(studReg)
+            loop.break
+          }
         }
       }
       showSummary(studReg)
     }
+    else showSummary(studReg)
   }
 }

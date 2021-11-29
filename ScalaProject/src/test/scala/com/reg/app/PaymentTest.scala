@@ -27,63 +27,63 @@ class PaymentTest {
   }
 
   @Test def testToString(): Unit = {
-    val expResult = "Payment(3, true, 5000.0)"
+    val expResult = "Payment(3, true, 470.0)"
     val result = coursePayment.toString
     assertEquals(expResult, result)
   }
 
   @Test def testGetTotalInState3Credits(): Unit = {
     val testPayment = new Payment(3, true)
-    val expResult = 5000.0
+    val expResult = 470.0
     val result = testPayment.getTotal
     assertEquals(expResult, result, 0.0)
   }
 
   @Test def testGetTotalInState4Credits(): Unit = {
     val testPayment = new Payment(4, true)
-    val expResult = 4400.0
+    val expResult = 970.0
     val result = testPayment.getTotal
     assertEquals(expResult, result, 0.0)
   }
 
   @Test def testGetTotalInState6Credits(): Unit = {
     val testPayment = new Payment(6, true)
-    val expResult = 4400.0
+    val expResult = 970.0
     val result = testPayment.getTotal
     assertEquals(expResult, result, 0.0)
   }
 
   @Test def testGetTotalInState8Credits(): Unit = {
     val testPayment = new Payment(8, true)
-    val expResult = 4000.0
+    val expResult = 1470.0
     val result = testPayment.getTotal
     assertEquals(expResult, result, 0.0)
   }
 
   @Test def testGetTotalOutState3Credits(): Unit = {
     val testPayment = new Payment(3, false)
-    val expResult = 20000.0
+    val expResult = 530.0
     val result = testPayment.getTotal
     assertEquals(expResult, result, 0.0)
   }
 
   @Test def testGetTotalOutState4Credits(): Unit = {
     val testPayment = new Payment(4, false)
-    val expResult = 17600.0
+    val expResult = 1030.0
     val result = testPayment.getTotal
     assertEquals(expResult, result, 0.0)
   }
 
   @Test def testGetTotalOutState6Credits(): Unit = {
     val testPayment = new Payment(6, false)
-    val expResult = 17600.0
+    val expResult = 1030.0
     val result = testPayment.getTotal
     assertEquals(expResult, result, 0.0)
   }
 
   @Test def testGetTotalOutState8Credits(): Unit = {
     val testPayment = new Payment(8, false)
-    val expResult = 16000.0
+    val expResult = 1530.0
     val result = testPayment.getTotal
     assertEquals(expResult, result, 0.0)
   }

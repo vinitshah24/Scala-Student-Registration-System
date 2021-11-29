@@ -158,7 +158,7 @@ object Driver {
       while (true) {
         print("Enter the Course ID: ")
         var courseId = scala.io.StdIn.readLine().toInt
-        for (course <- selectionCourses) if (course.id == courseId) regCourseList += course
+        for (course <- selectionCourses) if (course.id == courseId) studReg.addCourse(course)
         print("Enter C to complete Registration: ")
         var contStr = scala.io.StdIn.readLine().toString
         if (contStr.substring(0).toUpperCase.equals("C")) {
@@ -166,7 +166,7 @@ object Driver {
         }
       }
     }
-    studReg = new Registration(department, student, regCourseList)
+    //    studReg = new Registration(department, student, regCourseList)
     showSummary(studReg)
 
     println("\n----- DROP/REMOVE CLASSES -----\n")
@@ -210,11 +210,9 @@ object Driver {
         }
       }
     }
-    val previousCourses = studReg.courses
     for (course <- moreCourses) {
-      previousCourses.append(course)
+      studReg.addCourse(course)
     }
-    studReg.courses = previousCourses
     showSummary(studReg)
   }
 }

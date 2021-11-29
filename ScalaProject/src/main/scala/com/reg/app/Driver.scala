@@ -38,7 +38,7 @@ object Driver {
         println("")
       }
       println("----------------------------------------")
-      println(s"TOTAL PAYMENT: ${studReg.getCourseTotal}")
+      println(s"TOTAL PAYMENT DUE: ${studReg.getCourseTotal}")
       println("----------------------------------------")
     }
 
@@ -56,7 +56,7 @@ object Driver {
       case e: NumberFormatException => println("Couldn't convert age to Integer value")
       case e: _ => println(s"Caught Exception: $e")
     }
-    print("Enter Gender (M/F): ")
+    print("Enter Gender: ")
     val gender = scala.io.StdIn.readLine().toUpperCase() match {
       case "M" => "Male"
       case "F" => "Female"
@@ -130,22 +130,27 @@ object Driver {
       "A study of the design and implementation of databases and enterprise data warehouses for business applications",
       3, ArrayBuffer("Saturday"), "5:00 PM", "Kennedy", professorsList(2))
 
-    println(s"\n----- AVAILABLE COURSES FOR ${student.getMajor.toUpperCase} REGISTRATION -----\n")
     var selectionCourses: ListBuffer[Course] = ListBuffer[Course]()
     var department: Department = new CSDepartment()
-    if (student.getMajor.equals("Computer Science")) {
-      printCourses(csCourseList)
-      selectionCourses = csCourseList
-      department = new AccDepartment()
-    } else if (student.getMajor.equals("Biology")) {
-      printCourses(bioCourseList)
-      selectionCourses = bioCourseList
-      department = new BioDepartment()
-    } else {
-      printCourses(accCourseList)
-      selectionCourses = accCourseList
-      department = new AccDepartment()
+
+    def showAvailableCourses(): Unit = {
+      println(s"\n----- AVAILABLE COURSES FOR ${student.getMajor.toUpperCase} REGISTRATION -----\n")
+      if (student.getMajor.equals("Computer Science")) {
+        printCourses(csCourseList)
+        selectionCourses = csCourseList
+        department = new AccDepartment()
+      } else if (student.getMajor.equals("Biology")) {
+        printCourses(bioCourseList)
+        selectionCourses = bioCourseList
+        department = new BioDepartment()
+      } else {
+        printCourses(accCourseList)
+        selectionCourses = accCourseList
+        department = new AccDepartment()
+      }
     }
+
+    showAvailableCourses()
     val regCourseList: ListBuffer[Course] = ListBuffer[Course]()
     var studReg = new Registration(department, student, regCourseList)
     var loop = new Breaks
@@ -157,8 +162,6 @@ object Driver {
         print("Enter C to complete Registration: ")
         var contStr = scala.io.StdIn.readLine().toString
         if (contStr.substring(0).toUpperCase.equals("C")) {
-          studReg = new Registration(department, student, regCourseList)
-          showSummary(studReg)
           loop.break
         }
       }
@@ -190,5 +193,28 @@ object Driver {
       showSummary(studReg)
     }
     else showSummary(studReg)
+
+    println("\n----- ADD/UPDATE CLASSES -----\n")
+    showAvailableCourses()
+    var moreCourses: ListBuffer[Course] = ListBuffer[Course]()
+    loop = new Breaks
+    loop.breakable {
+      while (true) {
+        print("Enter the Course ID: ")
+        var courseId = scala.io.StdIn.readLine().toInt
+        for (course <- selectionCourses) if (course.id == courseId) moreCourses += course
+        print("Enter C to complete Registration: ")
+        var contStr = scala.io.StdIn.readLine().toString
+        if (contStr.substring(0).toUpperCase.equals("C")) {
+          loop.break
+        }
+      }
+    }
+    val previousCourses = studReg.courses
+    for (course <- moreCourses) {
+      previousCourses.append(course)
+    }
+    studReg.courses = previousCourses
+    showSummary(studReg)
   }
 }

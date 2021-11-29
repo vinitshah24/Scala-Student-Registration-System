@@ -1,8 +1,5 @@
 package com.reg.app
 
-import java.util
-import scala.collection.mutable.ArrayBuffer
-
 class Professor(firstName: String, lastName: String, age: Int, gender: String,
                 var id: Int, var email: String)
   extends Person(firstName, lastName, age, gender) {

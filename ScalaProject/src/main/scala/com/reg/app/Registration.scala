@@ -6,7 +6,12 @@ class Registration(var department: Department, var student: Student, var courses
 
   def getCourses: ListBuffer[Course] = courses
 
-  def addCourse(course: Course): Unit = courses.append(course)
+  def addCourse(course: Course): Unit = {
+    val filterData = courses.filter(c => c.id == course.id)
+    if (filterData.isEmpty) {
+      courses.append(course)
+    }
+  }
 
   def removeCourse(course: Course): Course = courses.remove(courses.indexOf(course))
 

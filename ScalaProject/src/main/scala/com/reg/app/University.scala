@@ -3,6 +3,7 @@ package com.reg.app
 class University {
   var name: String = ""
   var address: String = ""
+  private val email: String = ""
 
   def getName: String = this.name
 

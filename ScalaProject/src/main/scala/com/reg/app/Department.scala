@@ -2,6 +2,7 @@ package com.reg.app
 
 import scala.collection.mutable.ListBuffer
 
+/* Collection of abstract and non-abstract methods. */
 trait Department {
   val universityName: String = "University of North Carolina at Charlotte"
   val departmentName: String
